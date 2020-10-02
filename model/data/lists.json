@@ -1,0 +1,14 @@
+[
+  {
+    "list_name": "Done",
+    "set_list_id": 1
+  },
+  {
+    "list_name": "In progress",
+    "set_list_id": 1
+  },
+  {
+    "list_name": "Need to do",
+    "set_list_id": 1
+  }
+]

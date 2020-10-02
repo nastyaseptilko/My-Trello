@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="./css/bootstrap.min.css">
+    <link rel="stylesheet" href="./css/authorization.css">
+</head>
+<body>
+
+{{#if registerLink}}
+<a href="/register" class="nav-link"> Register </a>
+{{else}}
+<a href="/login" class="nav-link">Login </a>
+{{/if}}
+
+<div>
+    {{{body}}}
+</div>
+
+</body>
+</html>
