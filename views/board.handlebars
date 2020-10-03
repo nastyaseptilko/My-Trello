@@ -1,0 +1,20 @@
+<form action="/addBoard" method="post">
+
+    {{#if  message}}
+        <div class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+    {{/if}}
+    {{#if  error}}
+        <div class="alert alert-danger" role="alert">
+            {{error}}
+        </div>
+    {{/if}}
+
+    <div class="form-group ">
+        <label>Name board</label>
+        <input type="text" name="boardName" placeholder="Inter board name, please" class="form-control" required>
+    </div>
+    <button type="submit" id="submit" class="btn btn-outline-success">Add</button>
+
+</form>

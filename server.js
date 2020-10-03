@@ -12,7 +12,9 @@ const db = require('./model/');
 const app = express();
 
 const authorizationController = require('./controllers/authorizationController');
-const mainPageController = require('./controllers/mainPageController')
+const authorizationGoogle= require('./controllers/authorizationGoogle');
+const mainPageController = require('./controllers/mainPageController');
+const boardController = require('./controllers/boardController')
 
 const jwtSecret = 'asdfghjklll4567poiuytr45ewqsxcvhrg7ytrdfghjnbv123890';
 
@@ -26,7 +28,7 @@ app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(session({secret: 'you secret key'}));
+app.use(session({secret: jwtSecret}));
 app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -60,10 +62,18 @@ app.use('/', function (request, response, next) {
     }
 });
 
+
+app.use('/board', function (request, response, next) {
+    if (!request.user) {
+        authorizationController.getPageLogin(request, response);
+    } else {
+        next();
+    }
+});
+
 app.get('/', mainPageController.getPageMain);
 app.get('/login', authorizationController.getPageLogin);
-app.get('/success', (request, response) => authorizationController.authWithSocialNetwork(request, response, userProfile));
-
+app.get('/success', (request, response) => authorizationGoogle.authWithSocialNetwork(request, response, userProfile));
 app.get('/auth/google', passport.authenticate('google', {
     scope: ['profile', 'email']
 }));
@@ -71,12 +81,14 @@ app.get('/auth/google/callback', passport.authenticate('google', {
     failureRedirect: '/login',
     successRedirect: '/success'
 }));
+app.get('/board', boardController.getPageBoard);
 
 app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
 
 app.post('/login', authorizationController.login);
-app.post('/register', authorizationController.register)
+app.post('/register', authorizationController.register);
+app.post('/addBoard', boardController.addBoard);
 
 app.listen(process.env.PORT || config.server.port, () => {
     console.log(`Listening to http://localhost:${config.server.port}/`);
