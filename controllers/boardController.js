@@ -13,13 +13,12 @@ module.exports = {
             where: {
                 user_id: id
             },
-            attributes:["board_name"]
+            attributes:['board_name', 'set_list_id']
         }).then(board=> {
             response.render('viewYourBoard', {
                 title: 'Board',
                 layout: 'board',
-                listBoard: board,
-               //set_list_id: board
+                listBoard: board
             });
         })
     },
@@ -30,9 +29,21 @@ module.exports = {
             response.status(404).end();
             return;
         }
-        db.Board.findByPk(set_list_id)
-            .then(r => r)
+        db.Set_lists.findAll({
+            where: {
+                user_id: request.user.id
+            },
+            include: [db.Lists],
+
+        }).then(list => {
+            response.render('list', {
+                title: 'Lists',
+                layout: 'list',
+                allLists: list
+            });
+        });
     },
+    //response.end(JSON.stringify(set, null, '  '))
 
     addBoard (request, response, id) {
         const board_name = request.body.boardName

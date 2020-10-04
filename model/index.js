@@ -18,6 +18,7 @@ card.belongsTo(board, {foreignKey: 'board_id'});
 card.belongsTo(lists, {foreignKey: 'list_id'});
 comment.belongsTo(card, {foreignKey: 'card_id'});
 
+set_lists.hasMany(lists, {foreignKey: 'set_list_id'});
 
 
 module.exports = {
@@ -33,7 +34,7 @@ module.exports = {
 };
 
 sequelize.sync({force: false})
-    .then(loadData)
+    //.then(loadData)
     .then(() => console.log('Db has been synchronizing successfully'))
     .catch(err => console.log('Error while synchronizing: ' + err.toString()));
 
