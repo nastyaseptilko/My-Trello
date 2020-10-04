@@ -1,0 +1,30 @@
+<form action="/addCard" method="post">
+
+    {{#if  message}}
+        <div class="alert alert-success" role="alert">
+            {{message}}
+        </div>
+    {{/if}}
+    <div class="form-group ">
+        <label>Board id</label>
+        <input type="number" name="boardId" placeholder="Inter board id, please" class="form-control" required>
+    </div>
+    <div class="form-group ">
+        <label>List id</label>
+        <input type="number" name="listId" placeholder="Inter list id, please" class="form-control" required>
+    </div>
+    <div class="form-group ">
+        <label>Name card</label>
+        <input type="text" name="cardName" placeholder="Inter card name, please" class="form-control" required>
+    </div>
+    <div class="form-group ">
+        <label>Description card</label>
+        <input type="text" name="description" placeholder="Inter description card, please" class="form-control" required>
+    </div>
+    <div class="form-group ">
+        <label>Date finish task</label>
+        <input type="date" name="date" placeholder="Inter date, please" class="form-control" required>
+    </div>
+    <button type="submit" id="submit" class="btn btn-outline-success">Add</button>
+
+</form>

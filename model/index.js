@@ -18,6 +18,8 @@ card.belongsTo(board, {foreignKey: 'board_id'});
 card.belongsTo(lists, {foreignKey: 'list_id'});
 comment.belongsTo(card, {foreignKey: 'card_id'});
 
+
+
 module.exports = {
     Users: users,
     Set_lists: set_lists,
