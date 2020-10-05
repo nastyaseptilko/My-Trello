@@ -3,15 +3,19 @@
 
         <div class="card" style="width: 18rem;  position: relative;  left: 30px; ">
             <div class="card-body">
-                <h5 class="card-title">{{list_name}}</h5>
+                <h4 class="card-title">{{list_name}}</h4>
+
                 {{#each cards}}
-                    <p class="card-text">{{card_name}}</p>
+                    <h6 class="card-text">{{card_name}}</h6>
+                    <a href="/card/{{id}}" class="btn btn-outline-info btn-sm">Details</a>
                 {{/each}}
+
                 <a href="/addCard" class="btn btn-outline-success">Add new card</a>
+                <p></p>
             </div>
         </div>
         <p></p>
 
     {{/each}}
-    <a href="/addList" style="margin-left: 30px" class="btn btn-outline-success">Add new list</a>
+
 </div>

@@ -19,7 +19,7 @@ const mainPageController = require('./controllers/mainPageController');
 const boardController = require('./controllers/boardController');
 const cardController = require('./controllers/cardController');
 const listsController = require('./controllers/listsController');
-
+const commentController = require('./controllers/commentController');
 
 const jwtSecret = 'asdfghjklll4567poiuytr45ewqsxcvhrg7ytrdfghjnbv123890';
 
@@ -108,15 +108,18 @@ app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
 app.get('/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
 app.get('/addBoard', boardController.getFormBoard);
+app.get('/card/:id', cardController.detailsCard);
 app.get('/addCard', cardController.getFormCard);
 app.get('/board/:set_list_id/:board_id', listsController.getPageLists);
 app.get('/addList', listsController.getFormList);
+app.get('/comment/:id', commentController.getComments);
 
 app.post('/login', authorizationController.login);
 app.post('/register', authorizationController.register);
 app.post('/addBoard', (request, response) => boardController.addBoard(request, response, request.user.id));
 app.post('/addCard', cardController.addCard);
 app.post('/addList', listsController.addList);
+app.post('/addComment/:id', commentController.addComment);
 
 app.listen(process.env.PORT || config.server.port, () => {
     console.log(`Listening to http://localhost:${config.server.port}/`);

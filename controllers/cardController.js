@@ -1,10 +1,31 @@
 const db = require('./../model');
 
 module.exports = {
-    getFormCard (request, response) {
-        response.render('card',{
+    getFormCard(request, response) {
+        response.render('card', {
             title: 'Card',
             layout: 'card',
+        })
+    },
+
+    detailsCard(request, response) {
+        const id = request.params.id;
+
+        db.Card.findOne({
+            where:{
+                id:id
+            },
+            attributes: ['id', 'card_name', 'description', 'date_finish_task']
+        }).then(card => {
+            response.render('detailsCard', {
+                title: 'Details',
+                layout: 'card',
+                card_name: card.card_name,
+                description: card.description,
+                date_finish_task: card.date_finish_task,
+                id: card.id
+            })
+
         })
     },
 

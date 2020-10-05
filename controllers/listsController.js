@@ -24,11 +24,11 @@ module.exports = {
                 model: db.Lists,
                 include: [{
                     model: db.Card,
-                    where: {board_id: board_id},
-                    attributes:['card_name']
+                    where: {board_id: board_id}
                 }]
             }],
         }).then(list => {
+            console.log(JSON.stringify(list, null, ' '))
             response.render('list', {
                 title: 'Lists',
                 layout: 'list',

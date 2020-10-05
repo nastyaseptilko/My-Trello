@@ -9,8 +9,20 @@
 <h1> Lists </h1>
 <div>
     {{{body}}}
+
 </div>
 
-
+<script>
+    function details() {
+        let options ={
+            method:'GET', headers:{'Content-Type':'application/json',},
+        };
+        fetch ('/card',options)
+                .then(response => response.json())
+                .then(responseJson => {
+                    document.getElementById('detailsForCard').innerText = JSON.stringify(responseJson, null, '  ');
+                })
+    }
+</script>
 </body>
 </html>

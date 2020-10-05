@@ -24,11 +24,13 @@ module.exports = {
     },
 
     addBoard (request, response, id) {
-        const board_name = request.body.boardName
+        const board_name = request.body.boardName;
+        const set_list_id = request.body.set_list_id;
 
         db.Board.findOne({
             where: {
-                board_name: board_name
+                board_name: board_name,
+                user_id: id
             }
         }).then(board => {
             if (board) {
@@ -40,7 +42,8 @@ module.exports = {
             } else {
                 db.Board.create({
                     board_name: board_name,
-                    user_id: id
+                    user_id: id,
+                    set_list_id: set_list_id
                 }).then(board => {
                     response.render('board', {
                         title: 'Add board',

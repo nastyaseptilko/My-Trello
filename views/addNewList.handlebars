@@ -1,9 +1,11 @@
 <form action="/addList" method="post">
+
     {{#if  message}}
         <div class="alert alert-success" role="alert">
             {{message}}
         </div>
     {{/if}}
+
     <div class="form-group ">
         <label>List name</label>
         <input type="text" name="listName" placeholder="Inter list name, please" class="form-control" required>
