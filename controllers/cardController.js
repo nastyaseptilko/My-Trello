@@ -1,13 +1,12 @@
 const db = require('./../model');
 
 module.exports = {
-    getPageAddCard (request, response) {
+    getFormCard (request, response) {
         response.render('card',{
             title: 'Card',
             layout: 'card',
         })
     },
-
 
     addCard(request, response) {
         const board_id = request.body.boardId;

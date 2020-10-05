@@ -18,6 +18,7 @@ const authorizationGoogle= require('./controllers/authorizationGoogle');
 const mainPageController = require('./controllers/mainPageController');
 const boardController = require('./controllers/boardController');
 const cardController = require('./controllers/cardController');
+const listsController = require('./controllers/listsController');
 
 
 const jwtSecret = 'asdfghjklll4567poiuytr45ewqsxcvhrg7ytrdfghjnbv123890';
@@ -106,14 +107,16 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
 app.get('/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
-app.get('/addBoard', boardController.getPageAddBoard);
-app.get('/addCard', cardController.getPageAddCard);
-app.get('/board/:set_list_id', boardController.getPageLists);
+app.get('/addBoard', boardController.getFormBoard);
+app.get('/addCard', cardController.getFormCard);
+app.get('/board/:set_list_id/:board_id', listsController.getPageLists);
+app.get('/addList', listsController.getFormList);
 
 app.post('/login', authorizationController.login);
 app.post('/register', authorizationController.register);
 app.post('/addBoard', (request, response) => boardController.addBoard(request, response, request.user.id));
 app.post('/addCard', cardController.addCard);
+app.post('/addList', listsController.addList);
 
 app.listen(process.env.PORT || config.server.port, () => {
     console.log(`Listening to http://localhost:${config.server.port}/`);

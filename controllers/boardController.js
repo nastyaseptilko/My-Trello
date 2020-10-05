@@ -1,7 +1,7 @@
 const db = require('./../model');
 
 module.exports = {
-    getPageAddBoard (request, response) {
+    getFormBoard (request, response) {
         response.render('board',{
             title: 'Board',
             layout: 'board',
@@ -13,7 +13,7 @@ module.exports = {
             where: {
                 user_id: id
             },
-            attributes:['board_name', 'set_list_id']
+            attributes:['id', 'board_name', 'set_list_id']
         }).then(board=> {
             response.render('viewYourBoard', {
                 title: 'Board',
@@ -23,30 +23,9 @@ module.exports = {
         })
     },
 
-    getPageLists (request, response) {
-       const set_list_id =  Number(request.params.set_list_id);
-        if (!set_list_id) {
-            response.status(404).end();
-            return;
-        }
-        db.Set_lists.findAll({
-            where: {
-                user_id: request.user.id
-            },
-            include: [db.Lists],
-
-        }).then(list => {
-            response.render('list', {
-                title: 'Lists',
-                layout: 'list',
-                allLists: list
-            });
-        });
-    },
-    //response.end(JSON.stringify(set, null, '  '))
-
     addBoard (request, response, id) {
         const board_name = request.body.boardName
+
         db.Board.findOne({
             where: {
                 board_name: board_name
