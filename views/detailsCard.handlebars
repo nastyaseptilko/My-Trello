@@ -19,7 +19,7 @@
     <p></p>
 </form>
 
-<form action="/addComment/{{id}}" method="post" >
+<form action="/addComment/{{id}}" method="post">
     <div>
         <label>Write comment</label>
         <input type="text" name="comment" class="form-control" aria-describedby="button-addon4">
@@ -27,7 +27,20 @@
     </div>
 </form>
 
-<form action="/comment/{{id}}" method="get">
-    <button type="submit" id="submit" class="btn btn-outline-success">Get comments</button>
-    <p>{{body_comment}}</p>
-</form>
+
+<button onclick="getComments()" type="submit" id="submit" class="btn btn-outline-success">Get comments</button>
+<div id="listComments"></div>
+
+<script>
+    function getComments() {
+        let options = {
+            method: 'GET', headers: {'Content-Type': 'application/json',},
+        };
+        fetch('/comment/{{id}}', options)
+                .then(response => response.json())
+        .then(responseJson => {
+            document.getElementById('listComments').innerText = JSON.stringify(responseJson, null, '  ');
+        })
+    }
+</script>
+

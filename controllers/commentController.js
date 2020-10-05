@@ -11,10 +11,12 @@ module.exports = {
             }
         }).then(comment => {
             console.log('Comment: '+ JSON.stringify(comment, null, ' '))
-            response.render('detailsCard', {
-                title: 'Details',
-                layout: 'card'
-            })
+            response.json(comment);
+            // response.render('detailsCard', {
+            //     title: 'Details',
+            //     layout: 'card',
+            //     listComments: comment
+            // })
         })
     },
 
