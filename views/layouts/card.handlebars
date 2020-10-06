@@ -49,6 +49,45 @@
                     });
                 });
     }
+
+    function updateComment(id) {
+        let options ={
+            method:'PUT', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ bodyComment: document.getElementById(`comment-${id}`).value })
+        };
+        fetch (`/api/updateComment/${id}`,options)
+                .then(response => response.json())
+    }
+
+    function deleteComment(id) {
+        let options ={
+            method:'DELETE', headers:{'Content-Type':'application/json'}
+        };
+        fetch (`/api/deleteComment/${id}`,options)
+                .then(response => response.json())
+    }
+
+    function updateCard(id) {
+        let options ={
+            method:'PUT', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({
+                cardName: document.getElementById(`card-${id}`).value,
+                descriptionCard: document.getElementById(`description-${id}`).value,
+                dateFinishTaskCard: document.getElementById(`date-${id}`).value
+            })
+        };
+        fetch (`/api/updateCard/${id}`,options)
+                .then(response => response.json())
+    }
+    
+    function deleteCard(id) {
+        let options ={
+            method:'DELETE', headers:{'Content-Type':'application/json'},
+        };
+        fetch (`/api/deleteCard/${id}`,options)
+                .then(response => response.json())
+    }
+
 </script>
 
 </body>

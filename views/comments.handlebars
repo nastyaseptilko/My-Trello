@@ -1,0 +1,10 @@
+{{#each listComments}}
+    <div>
+        <label>Comments under this card</label>
+        <input name="bodyComment" id="comment-{{id}}" type="text" value="{{body_comment}}" class="form-control" aria-describedby="button-addon4">
+    </div>
+    <div>
+        <button type="submit" onclick="updateComment({{id}})" id="submit" class="btn btn-outline-success">Update</button>
+        <button type="submit" onclick="deleteComment({{id}})" id="submit" class="btn btn-outline-danger">Delete</button>
+    </div>
+{{/each}}

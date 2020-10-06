@@ -2,4 +2,14 @@
     <ul class="list-group">
         <li class="list-group-item"><a href="/api/board/{{set_list_id}}/{{id}}"> {{board_name}} </a></li>
     </ul>
+    <p></p>
+
+    <div>
+        <label>Board name</label>
+        <input name="boardName" type="text" id="board-{{id}}" value="{{board_name}}" class="form-control" aria-describedby="button-addon4">
+        <div>
+            <button type="submit" onclick="updateBoard({{id}})" id="submit" class="btn btn-outline-success">Update</button>
+            <button type="submit" onclick="deleteBoard({{id}})" id="submit" class="btn btn-outline-danger">Delete</button>
+        </div>
+    </div>
 </div>

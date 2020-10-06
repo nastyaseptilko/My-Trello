@@ -1,20 +1,21 @@
-<form action="/#" method="post">
+<form>
     <div>
         <label>Card name</label>
-        <input name="cardName" type="text" value="{{card_name}}" class="form-control" aria-describedby="button-addon4">
+        <input name="cardName" type="text" id="card-{{id}}" value="{{card_name}}" class="form-control" aria-describedby="button-addon4">
     </div>
     <div>
         <label>Description card</label>
-        <input name="descriptionCard" type="text" value="{{description}}" class="form-control"
+        <input name="descriptionCard" id="description-{{id}}" type="text" value="{{description}}" class="form-control"
                aria-describedby="button-addon4">
     </div>
     <div>
         <label>Date finish task</label>
-        <input name="dateFinishTaskCard" type="text" value="{{date_finish_task}}" class="form-control"
-               aria-describedby="button-addon4">
+        <!-- type="date"-->
+        <input name="dateFinishTaskCard" id="date-{{id}}" value="{{date_finish_task}}" class="form-control" aria-describedby="button-addon4">
     </div>
     <div>
-        <button type="submit" id="submit" class="btn btn-outline-success">Update</button>
+        <button type="submit" onclick="updateCard({{id}})" id="submit" class="btn btn-outline-success">Update</button>
+        <button type="submit" onclick="deleteCard({{id}})" id="submit" class="btn btn-outline-danger">Delete</button>
     </div>
     <p></p>
 </form>
@@ -27,20 +28,4 @@
     </div>
 </form>
 
-
-<button onclick="getComments()" type="submit" id="submit" class="btn btn-outline-success">Get comments</button>
-<div id="listComments"></div>
-
-<script>
-    function getComments() {
-        let options = {
-            method: 'GET', headers: {'Content-Type': 'application/json',},
-        };
-        fetch('/api/comment/{{id}}', options)
-                .then(response => response.json())
-        .then(responseJson => {
-            document.getElementById('listComments').innerText = JSON.stringify(responseJson, null, '  ');
-        })
-    }
-</script>
-
+<a href="/api/comment/{{id}}" class="btn btn-outline-success">Get comments</a>

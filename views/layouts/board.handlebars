@@ -10,6 +10,23 @@
 <div>
     {{{body}}}
 </div>
+<script>
+    function updateBoard(id) {
+        let options = {
+            method:'PUT', headers:{'Content-Type':'application/json'},
+            body: JSON.stringify({ board: document.getElementById(`board-${id}`).value })
+        };
+        fetch (`/api/board/${id}`,options)
+                .then(response => response.json())
+    }
 
+    function deleteBoard(id) {
+        let options = {
+            method:'DELETE', headers:{'Content-Type':'application/json'}
+        };
+        fetch (`/api/board/${id}`,options)
+                .then(response => response.json())
+    }
+</script>
 </body>
 </html>

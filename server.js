@@ -97,6 +97,7 @@ app.get('/api/boards', boardController.getBoards);
 // Get all user lists by board id
 app.get('/api/lists/:board_id', listsController.getLists);
 
+//TODO: update url name!
 app.get('/api/addBoard', boardController.getFormBoard);
 app.get('/api/card/:id', cardController.detailsCard);
 app.get('/api/addCard', cardController.getFormCard);
@@ -110,6 +111,15 @@ app.post('/api/addBoard', (request, response) => boardController.addBoard(reques
 app.post('/api/addCard', cardController.addCard);
 app.post('/api/addList/:set_list_id', listsController.addList);
 app.post('/api/addComment/:id', commentController.addComment);
+
+app.put('/api/updateCard/:id', cardController.updateCard);
+app.put('/api/updateComment/:id', commentController.updateComment);
+app.put('/api/board/:id', boardController.updateBoard)
+
+app.delete('/api/deleteCard/:id', cardController.deleteCard);
+app.delete('/api/deleteComment/:id', commentController.deleteComment);
+app.delete('/api/board/:id', boardController.deleteBoard)
+
 
 app.listen(process.env.PORT || config.server.port, () => {
     console.log(`Listening to http://localhost:${config.server.port}/`);

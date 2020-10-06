@@ -12,8 +12,8 @@ module.exports = {
         const id = request.params.id;
 
         db.Card.findOne({
-            where:{
-                id:id
+            where: {
+                id: id
             },
             attributes: ['id', 'card_name', 'description', 'date_finish_task']
         }).then(card => {
@@ -49,5 +49,38 @@ module.exports = {
                 message: 'Card added'
             });
         });
+    },
+
+    updateCard(request, response) {
+        const card_id = request.params.id;
+        const card_name = request.body.cardName;
+        const description = request.body.descriptionCard;
+        const date_finish_task = request.body.dateFinishTaskCard;
+
+        db.Card.update({
+            card_name: card_name,
+            description: description,
+            date_finish_task: date_finish_task },
+            {
+            where: {
+                id: card_id
+            }
+        }).then(result => response.json(result));
+    },
+
+    deleteCard(request, response) {
+        const card_id = request.params.id;
+        const deleteCard = {  id: card_id }
+
+        return db.Card.destroy({
+            where: deleteCard
+        }).then(isDeleted => {
+            if (isDeleted) {
+                response.json(deleteCard);
+            } else {
+                response.status(401).end('<h1>No such records have been found</h1>')
+            }
+        });
+
     }
 }
