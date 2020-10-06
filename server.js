@@ -70,25 +70,9 @@ app.use('/', function (request, response, next) {
     }
 });
 
-app.use('/addBoard', function (request, response, next) {
+app.use('/api', function (request, response, next) {
     if (!request.user) {
-        authorizationController.getPageLogin(request, response);
-    } else {
-        next();
-    }
-});
-
-app.use('/board', function (request, response, next) {
-    if (!request.user) {
-        authorizationController.getPageLogin(request, response);
-    } else {
-        next();
-    }
-});
-
-app.use('/addCard', function (request, response, next) {
-    if (!request.user) {
-        authorizationController.getPageLogin(request, response);
+        response.redirect('/login');
     } else {
         next();
     }
@@ -106,20 +90,26 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }));
 app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
-app.get('/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
-app.get('/addBoard', boardController.getFormBoard);
-app.get('/card/:id', cardController.detailsCard);
-app.get('/addCard', cardController.getFormCard);
-app.get('/board/:set_list_id/:board_id', listsController.getPageLists);
-app.get('/addList', listsController.getFormList);
-app.get('/comment/:id', commentController.getComments);
+app.get('/api/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
+
+// Get all user boards
+app.get('/api/boards', boardController.getBoards);
+// Get all user lists by board id
+app.get('/api/lists/:board_id', listsController.getLists);
+
+app.get('/api/addBoard', boardController.getFormBoard);
+app.get('/api/card/:id', cardController.detailsCard);
+app.get('/api/addCard', cardController.getFormCard);
+app.get('/api/board/:set_list_id/:board_id', listsController.getPageLists);
+app.get('/api/addList/:set_list_id', listsController.getFormList);
+app.get('/api/comment/:id', commentController.getComments);
 
 app.post('/login', authorizationController.login);
 app.post('/register', authorizationController.register);
-app.post('/addBoard', (request, response) => boardController.addBoard(request, response, request.user.id));
-app.post('/addCard', cardController.addCard);
-app.post('/addList', listsController.addList);
-app.post('/addComment/:id', commentController.addComment);
+app.post('/api/addBoard', (request, response) => boardController.addBoard(request, response, request.user.id));
+app.post('/api/addCard', cardController.addCard);
+app.post('/api/addList/:set_list_id', listsController.addList);
+app.post('/api/addComment/:id', commentController.addComment);
 
 app.listen(process.env.PORT || config.server.port, () => {
     console.log(`Listening to http://localhost:${config.server.port}/`);

@@ -1,4 +1,4 @@
-<form action="/addBoard" method="post">
+<form action="/api/addBoard" method="post">
 
     {{#if  message}}
         <div class="alert alert-success" role="alert">
@@ -12,10 +12,9 @@
     {{/if}}
 
     <div class="form-group ">
-        <label>Set list</label>
-        <input type="number" name="set_list_id" placeholder="Inter set list, please" class="form-control" required>
+
         <label>Board name</label>
-        <input type="text" name="boardName" placeholder="Inter board name, please" class="form-control" required>
+        <input type="text" name="boardName" placeholder="Enter board name, please" class="form-control" required>
     </div>
     <button type="submit" id="submit" class="btn btn-outline-success">Add</button>
 

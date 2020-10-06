@@ -10,8 +10,46 @@
 <h1> Card </h1>
 <div>
     {{{body}}}
-
 </div>
+
+<script>
+
+    loadBoards('boardId');
+
+    function loadBoards(controlName) {
+        fetch('/api/boards')
+                .then(response => response.json())
+                .then(boards => {
+                    const selectList = document.getElementsByName(controlName)[0];
+                    selectList.innerHTML = '';
+                    boards.forEach(board => {
+                        const option = document.createElement('option');
+                        option.setAttribute('value', board.id);
+                        option.innerText = board.board_name;
+                        selectList.appendChild(option);
+                    });
+                });
+    }
+
+    function loadLists(parentControlName, controlName) {
+        const boardId = document.getElementsByName(parentControlName)[0].value;
+        if (!boardId) {
+            return;
+        }
+        fetch('/api/lists/' + boardId)
+                .then(response => response.json())
+                .then(lists => {
+                    const selectList = document.getElementsByName(controlName)[0];
+                    selectList.innerHTML = '';
+                    lists.forEach(list => {
+                        const option = document.createElement('option');
+                        option.setAttribute('value', list.id);
+                        option.innerText = list.list_name;
+                        selectList.appendChild(option);
+                    });
+                });
+    }
+</script>
 
 </body>
 </html>
