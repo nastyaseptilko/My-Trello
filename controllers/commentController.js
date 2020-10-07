@@ -1,5 +1,6 @@
 const db = require('./../model');
 const nodemailer = require('nodemailer');
+const secretConfig = require('../secretConfig');
 
 module.exports = {
 
@@ -19,23 +20,21 @@ module.exports = {
         })
     },
 
-    addComment(request, response) {
+    async addComment(request, response) {
         const id = request.params.id;
-        const body_comment = request.body.comment;
-        let email = '';
+        let body_comment = request.body.comment;
 
-        console.log("comment: " + body_comment)
+        const mentionedEmail = getMentionedEmail(body_comment);
 
-        // if (body_comment.includes("@")) {
-        //     console.log("email: " + email)
-        //     if (validateEmail(email)) {
-        //
-        //         sendMessageEmail(email).then(result => result)
-        //     }
-        //     else{
-        //         console.log('error')
-        //     }
-        // }
+        if (mentionedEmail) {
+            const matchUser = await db.Users.findOne({
+                where: { email: mentionedEmail },
+                attributes: ['full_name']
+            });
+            if (matchUser) {
+                body_comment = body_comment.replace(`@${mentionedEmail}`, matchUser.full_name);
+            }
+        }
 
         if (body_comment) {
             db.Comment.create({
@@ -45,15 +44,6 @@ module.exports = {
                 body_comment: body_comment,
                 card_id: id
             }).then(comment => {
-
-                if (comment.body_comment.includes("@")) {
-                    const regExp = /^(([^<>()[].,;:s@"]+(.[^<>()[].,;:s@"]+)*)|(".+"))@(([^<>()[].,;:s@"]+.)+[^<>()[].,;:s@"]{2,})$/i;
-                   // let email = comment.body_comment.search(regExp);
-                    let email = regExp.test(comment.body_comment)
-                    console.log("email: " + email)
-                    sendMessageEmail(email).then(r => r);
-                }
-
                 response.json(comment)
             })
 
@@ -92,22 +82,32 @@ module.exports = {
 
 }
 
-async function sendMessageEmail(email) {
-    let testEmailAccount = await nodemailer.createTestAccount();
+function getMentionedEmail(comment) {
+    const EMAIL_SEARCH_REGEX = /@((([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,})))([\W]|$)/;
+    const emailSearchResult = comment.match(EMAIL_SEARCH_REGEX);
+    let email;
+    if (emailSearchResult) {
+        email = emailSearchResult[1];
+        sendMessageEmail(email, comment);
+    }
+    return email;
+}
+
+async function sendMessageEmail(email, comment) {
+
     let transporter = nodemailer.createTransport({
-        host: 'smtp.ethereal.email',
-        port: 587,
+        service: 'gmail',
         auth: {
-            user: testEmailAccount.user,
-            pass: testEmailAccount.pass
+            user: secretConfig.user,
+            pass: secretConfig.password
         }
     });
+
     let result = await transporter.sendMail({
         from: '"Node js" <nodejs@example.com>',
         to: email,
-        subject: 'New position',
-        text: 'text'
+        subject: 'Final homework',
+        html: comment
     });
     console.log('Send email to: ' + email);
 }
-

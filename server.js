@@ -27,10 +27,9 @@ passport.serializeUser((user, done) => done(null, user));
 passport.deserializeUser((user, done) => done(null, user));
 
 app.use(cookieParser());
-// app.engine('handlebars', expressHandlebars());
 app.engine('handlebars', expressHandlebars({
     handlebars: allowInsecurePrototypeAccess(_handlebars)
-}))
+}));
 app.set('view engine', 'handlebars');
 app.use(express.static(__dirname + '/static'));
 app.use(express.urlencoded({extended: false}));
@@ -90,14 +89,11 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }));
 app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
-app.get('/api/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
-
-// Get all user boards
-app.get('/api/boards', boardController.getBoards);
-// Get all user lists by board id
-app.get('/api/lists/:board_id', listsController.getLists);
 
 //TODO: update url name!
+app.get('/api/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
+app.get('/api/boards', boardController.getBoards);
+app.get('/api/lists/:board_id', listsController.getLists);
 app.get('/api/addBoard', boardController.getFormBoard);
 app.get('/api/card/:id', cardController.detailsCard);
 app.get('/api/addCard', cardController.getFormCard);
