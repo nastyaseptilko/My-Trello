@@ -56,8 +56,6 @@ module.exports = {
         const comment_id = request.params.id;
         const body_comment = request.body.bodyComment;
 
-        console.log(body_comment)
-
         db.Comment.update({body_comment: body_comment}, {
             where: {
                 id: comment_id

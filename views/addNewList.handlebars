@@ -1,4 +1,4 @@
-<form action="/api/addList/{{set_list_id}}" method="post">
+<form action="/api/list/{{set_list_id}}" method="post" style="margin-left: 15px;">
 
     {{#if  message}}
         <div class="alert alert-success" role="alert">
@@ -8,7 +8,10 @@
 
     <div class="form-group ">
         <label>List name</label>
-        <input type="text" name="listName" placeholder="Enter list name, please" class="form-control" required>
+        <input type="text" style="width: 700px;" name="listName" placeholder="Enter list name, please" class="form-control" required>
     </div>
+    <p></p>
     <button type="submit" id="submit" class="btn btn-outline-success">Add</button>
 </form>
+<p></p>
+<button type="button" style="margin-left: 15px;" class="btn btn-outline-dark" onclick="history.back();">Back</button>

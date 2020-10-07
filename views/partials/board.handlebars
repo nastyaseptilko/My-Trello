@@ -4,10 +4,11 @@
     </ul>
     <p></p>
 
-    <div>
+    <div style="margin-top: 50px">
         <label>Board name</label>
         <input name="boardName" type="text" id="board-{{id}}" value="{{board_name}}" class="form-control" aria-describedby="button-addon4">
         <div>
+            <p></p>
             <button type="submit" onclick="updateBoard({{id}})" id="submit" class="btn btn-outline-success">Update</button>
             <button type="submit" onclick="deleteBoard({{id}})" id="submit" class="btn btn-outline-danger">Delete</button>
         </div>

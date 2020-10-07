@@ -1,4 +1,4 @@
-<form>
+<form style="margin-left: 15px; width: 700px">
     <div>
         <label>Card name</label>
         <input name="cardName" type="text" id="card-{{id}}" value="{{card_name}}" class="form-control" aria-describedby="button-addon4">
@@ -13,6 +13,7 @@
         <!-- type="date"-->
         <input name="dateFinishTaskCard" id="date-{{id}}" value="{{date_finish_task}}" class="form-control" aria-describedby="button-addon4">
     </div>
+    <p></p>
     <div>
         <button type="submit" onclick="updateCard({{id}})" id="submit" class="btn btn-outline-success">Update</button>
         <button type="submit" onclick="deleteCard({{id}})" id="submit" class="btn btn-outline-danger">Delete</button>
@@ -20,12 +21,14 @@
     <p></p>
 </form>
 
-<form action="/api/addComment/{{id}}" method="post">
+<form action="/api/comment/{{id}}" method="post" style="margin-left: 15px; width: 700px; " >
     <div>
         <label>Write comment</label>
         <input type="text" name="comment" class="form-control" aria-describedby="button-addon4">
+        <p></p>
         <button type="submit" id="submit" class="btn btn-outline-success">Add comment</button>
     </div>
 </form>
-
-<a href="/api/comment/{{id}}" class="btn btn-outline-success">Get comments</a>
+<p></p>
+<a href="/api/comment/{{id}}" style="margin-left: 15px;" class="btn btn-outline-success">Get comments</a>
+<button type="button"  style="margin-left: 15px;" class="btn btn-outline-dark" onclick="history.back();">Back</button>

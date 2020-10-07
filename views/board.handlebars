@@ -1,4 +1,4 @@
-<form action="/api/addBoard" method="post">
+<form action="/api/board" method="post" style="margin-left: 15px; width: 700px">
 
     {{#if  message}}
         <div class="alert alert-success" role="alert">
@@ -16,6 +16,7 @@
         <label>Board name</label>
         <input type="text" name="boardName" placeholder="Enter board name, please" class="form-control" required>
     </div>
+    <p></p>
     <button type="submit" id="submit" class="btn btn-outline-success">Add</button>
-
+    <button type="button" class="btn btn-outline-dark" onclick="history.back();">Back</button>
 </form>
