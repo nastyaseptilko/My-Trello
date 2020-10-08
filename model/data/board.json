@@ -3,5 +3,15 @@
     "board_name": "No title",
     "set_list_id": 1,
     "user_id": 1
+  },
+  {
+    "board_name": "New board",
+    "set_list_id": 1,
+    "user_id": 1
+  },
+  {
+    "board_name": "Test board",
+    "set_list_id": 1,
+    "user_id": 1
   }
 ]

@@ -37,17 +37,21 @@ module.exports = {
     sequelize: sequelize
 };
 
-sequelize.sync({force: false})
-    //.then(loadData)
+sequelize.sync({force: true})
+    .then(loadData)
     .then(() => console.log('Db has been synchronizing successfully'))
     .catch(err => console.log('Error while synchronizing: ' + err.toString()));
 
 function loadData() {
     return Promise.all([
-        users.bulkCreate(require('./data/users.json')),
-        set_lists.bulkCreate(require('./data/set_lists.json')),
-        lists.bulkCreate(require('./data/lists.json'))
+        users.bulkCreate(require('./data/users.json'))
     ])
+        .then(() => Promise.all([
+            set_lists.bulkCreate(require('./data/set_lists.json'))
+        ]))
+        .then(() => Promise.all([
+            lists.bulkCreate(require('./data/lists.json'))
+        ]))
         .then(() => console.log('Users, Lists and Set lists have been loaded'))
         .then(() => Promise.all([
             board.bulkCreate(require('./data/board.json')),

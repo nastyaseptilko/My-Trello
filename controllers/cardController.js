@@ -17,6 +17,12 @@ module.exports = {
             },
             attributes: ['id', 'card_name', 'description', 'date_finish_task']
         }).then(card => {
+
+            if(!card) {
+                response.status(401).end(`<h1>Bad request!</h1>`);
+                return;
+            }
+
             response.render('detailsCard', {
                 title: 'Details',
                 layout: 'card',
@@ -70,17 +76,25 @@ module.exports = {
 
     deleteCard(request, response) {
         const card_id = request.params.id;
-        const deleteCard = {  id: card_id }
+        const deleteCard = { id: card_id }
 
-        return db.Card.destroy({
-            where: deleteCard
-        }).then(isDeleted => {
-            if (isDeleted) {
-                response.json(deleteCard);
-            } else {
-                response.status(401).end('<h1>No such records have been found</h1>')
+        db.Comment.destroy({
+            where:{
+                card_id: card_id
             }
-        });
+        }).then(deletedFK => {
+            db.Card.destroy({
+                where: deleteCard
+            }).then(isDeleted => {
+                if (isDeleted) {
+                    response.json(deleteCard);
+                } else {
+                    response.status(401).end('<h1>No such records have been found</h1>')
+                }
+            });
+        })
+
+
 
     }
 }

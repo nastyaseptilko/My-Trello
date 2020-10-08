@@ -1,8 +1,10 @@
+const https = require('https');
 const express = require('express');
+const fs = require('fs');
 const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const jwt = require('jsonwebtoken');
-const  _handlebars = require('handlebars');
+const _handlebars = require('handlebars');
 const expressHandlebars = require('express-handlebars');
 const {allowInsecurePrototypeAccess} = require('@handlebars/allow-prototype-access')
 const session = require('express-session');
@@ -10,11 +12,10 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const flash = require('connect-flash');
 const config = require('./config');
-const db = require('./model/');
 const app = express();
 
 const authorizationController = require('./controllers/authorizationController');
-const authorizationGoogle= require('./controllers/authorizationGoogle');
+const authorizationGoogle = require('./controllers/authorizationGoogle');
 const mainPageController = require('./controllers/mainPageController');
 const boardController = require('./controllers/boardController');
 const cardController = require('./controllers/cardController');
@@ -42,17 +43,39 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 let userProfile;
+const googleCallbackUrl = config.server.herokuRun ? config.google.herokuCallbackUrl : config.google.localCallbackUrl;
 
 passport.use(new GoogleStrategy({
         clientID: '948752186836-875s16i6pgmbsm3h3ljk5gsho4n3gsip.apps.googleusercontent.com',
         clientSecret: '8yeosfCFBccmVRcZag_Pe2lS',
-        callbackURL: "http://localhost:3000/auth/google/callback"
+        callbackURL: googleCallbackUrl
     },
     (accessToken, refreshToken, profile, done) => {
         userProfile = profile;
         return done(null, userProfile);
     })
 );
+
+
+let key;
+let cert;
+let server = app;
+let port = config.server.portHttp;
+
+if (!config.server.herokuRun) {
+    try {
+        key = fs.readFileSync('./certificates/resourcePrivateKey.key', 'utf8');
+        cert = fs.readFileSync('./certificates/resourceCert.crt', 'utf8');
+
+        port = config.server.portHttps;
+        server = https.createServer({key, cert}, app);
+    } catch (e) {
+        app.all('*', (request, response) => {
+            response.redirect(`https://${config.server.domainHttps}:${config.server.portHttps}${request.url}/`);
+        });
+    }
+}
+
 
 app.use('/', function (request, response, next) {
     const token = request.cookies.token;
@@ -117,6 +140,6 @@ app.delete('/api/comment/:id', commentController.deleteComment);
 app.delete('/api/board/:id', boardController.deleteBoard)
 
 
-app.listen(process.env.PORT || config.server.port, () => {
-    console.log(`Listening to http://localhost:${config.server.port}/`);
+server.listen(process.env.PORT || port, () => {
+    console.log(`Listening to https://localhost:${port}/`);
 });

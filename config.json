@@ -1,15 +1,23 @@
 {
   "server": {
-    "port": 3000
+    "herokuRun": false,
+    "domainHttp": "localhost",
+    "domainHttps": "localhost",
+    "portHttp": 3000,
+    "portHttps": 3001
+  },
+  "google": {
+    "herokuCallbackUrl": "https://my-trello-final-app.herokuapp.com/auth/google/callback",
+    "localCallbackUrl": "https://localhost:3001/auth/google/callback"
   },
   "db": {
     "mysql": {
-      "db_name": "trello",
-      "username": "root",
-      "password": "password",
+      "db_name": "DGdtVukFdj",
+      "username": "DGdtVukFdj",
+      "password": "ylR1i4vMup",
       "options": {
         "dialect": "mysql",
-        "host": "localhost",
+        "host": "remotemysql.com",
         "port": 3306,
         "logging": false,
         "define": {
