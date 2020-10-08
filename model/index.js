@@ -1,4 +1,5 @@
 const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const config = require('./../config').db.mysql;
 
 const sequelize = new Sequelize(config.db_name, config.username, config.password, config.options);
@@ -32,6 +33,7 @@ module.exports = {
     Board: board,
 
     Sequelize: Sequelize,
+    Op: Op,
     sequelize: sequelize
 };
 

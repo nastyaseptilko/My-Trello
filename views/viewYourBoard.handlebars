@@ -1,7 +1,20 @@
-<div class="row" style="margin-left: 15px">
-    {{#each listBoard}}
-        {{>board}}
-    {{/each}}
+<div class="main-div">
+
+    <div class="row block-left">
+        {{#each listBoard}}
+            {{>board}}
+        {{/each}}
+        <button type="button" class="btn btn-outline-dark back" onclick="history.back();">Back</button>
+    </div>
+
+    <div class="block-right">
+        <input type="text" name="search" class="form-control input-search" placeholder="Search..." required>
+        <p></p>
+        <button type="submit" onclick="resultSearch()" class="btn btn-outline-dark search-button">
+            Search
+        </button>
+        <div name="text"></div>
+        <ul class="nav flex-column" name="link"></ul>
+    </div>
+
 </div>
-<p></p>
-<button type="button" style="margin-left: 15px" class="btn btn-outline-dark" onclick="history.back();">Back</button>

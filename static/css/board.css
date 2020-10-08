@@ -1,0 +1,32 @@
+.main-div {
+    display: flex;
+}
+
+.main-div > div {
+    width: 50%;
+}
+
+.block-right {
+    font-size: 1.3rem;
+}
+
+.row {
+    margin-left: 0;
+    margin-right: 0;
+}
+
+.back {
+    position: relative;
+    height: 50px;
+
+}
+
+.input-search {
+    width: 90%;
+}
+
+.search-button {
+    margin-top: -12.5%;
+    margin-left: 91%;
+}
+

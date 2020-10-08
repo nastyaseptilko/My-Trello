@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>{{title}}</title>
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/board.css">
 </head>
 <body>
 <h1> Board </h1>
@@ -11,20 +12,57 @@
     {{{body}}}
 </div>
 <script>
+
+    function resultSearch() {
+        let search = document.getElementsByName('search')[0].value;
+
+        fetch(`/api/search?search=${search}`)
+                .then(response => response.json())
+                .then(search => {
+                    const listLinks = document.getElementsByName('link')[0];
+                    const textNoFound = document.getElementsByName('text')[0];
+                    listLinks.innerHTML = '';
+
+                    if (search.length === 0) {
+                        const noFound = document.createElement('p');
+                        noFound.innerText = 'No matches found';
+                        textNoFound.appendChild(noFound);
+                    }
+                    search.forEach(element => {
+
+                        const link = document.createElement('li');
+                        const a = document.createElement('a');
+                        a.setAttribute('value', element.id);
+
+                        if (element.board_name) {
+                            a.setAttribute('href', `/api/board/${element.set_list_id}/${element.id}`);
+                            a.innerText = element.board_name;
+                        } else if (element.card_name) {
+                            a.setAttribute('href', `/api/card/${element.id}`);
+                            a.innerText = element.card_name;
+                        }
+
+                        link.appendChild(a);
+                        listLinks.appendChild(link);
+
+                    })
+                })
+    }
+
     function updateBoard(id) {
         let options = {
-            method:'PUT', headers:{'Content-Type':'application/json'},
-            body: JSON.stringify({ board: document.getElementById(`board-${id}`).value })
+            method: 'PUT', headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({board: document.getElementById(`board-${id}`).value})
         };
-        fetch (`/api/board/${id}`,options)
+        fetch(`/api/board/${id}`, options)
                 .then(response => response.json())
     }
 
     function deleteBoard(id) {
         let options = {
-            method:'DELETE', headers:{'Content-Type':'application/json'}
+            method: 'DELETE', headers: {'Content-Type': 'application/json'}
         };
-        fetch (`/api/board/${id}`,options)
+        fetch(`/api/board/${id}`, options)
                 .then(response => response.json())
     }
 </script>

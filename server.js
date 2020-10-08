@@ -20,6 +20,7 @@ const boardController = require('./controllers/boardController');
 const cardController = require('./controllers/cardController');
 const listsController = require('./controllers/listsController');
 const commentController = require('./controllers/commentController');
+const searchController = require('./controllers/searchController');
 
 const jwtSecret = 'asdfghjklll4567poiuytr45ewqsxcvhrg7ytrdfghjnbv123890';
 
@@ -89,8 +90,6 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 }));
 app.get('/register', authorizationController.getPageRegister);
 app.get('/logout', authorizationController.logout);
-
-//TODO: update url name!
 app.get('/api/board', (request, response) => boardController.getPageBoard(request, response, request.user.id));
 app.get('/api/boards', boardController.getBoards);
 app.get('/api/lists/:board_id', listsController.getLists);
@@ -100,6 +99,7 @@ app.get('/api/card', cardController.getFormCard);
 app.get('/api/board/:set_list_id/:board_id', listsController.getPageLists);
 app.get('/api/list/:set_list_id', listsController.getFormList);
 app.get('/api/comment/:id', commentController.getComments);
+app.get('/api/search', searchController.getSearch);
 
 app.post('/login', authorizationController.login);
 app.post('/register', authorizationController.register);
