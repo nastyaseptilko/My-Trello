@@ -43,8 +43,6 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
-
-
 let userProfile;
 const googleCallbackUrl = config.server.herokuRun ? config.google.herokuCallbackUrl : config.google.localCallbackUrl;
 
