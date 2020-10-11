@@ -16,6 +16,7 @@ module.exports = {
         const email = request.body.email;
         const password = request.body.password;
 
+        //email приводить к строке !
         if (!email || !password ){
             response.status(401).send(`<h1>Bad request!</h1>`);
             return;

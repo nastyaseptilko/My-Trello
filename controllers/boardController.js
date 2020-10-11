@@ -88,7 +88,7 @@ module.exports = {
             if (isDeleted) {
                 response.json(deleteBoard);
             } else {
-                response.status(401).end('<h1>No such records have been found</h1>')
+                response.status(404).end('<h1>No such records have been found</h1>')
             }
         });
     }

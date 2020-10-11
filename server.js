@@ -12,6 +12,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const flash = require('connect-flash');
 const config = require('./config');
+const secretConfig = require('./secretConfig.json')
 const app = express();
 
 const authorizationController = require('./controllers/authorizationController');
@@ -42,12 +43,14 @@ app.use(flash());
 app.use(passport.initialize());
 app.use(passport.session());
 
+
+
 let userProfile;
 const googleCallbackUrl = config.server.herokuRun ? config.google.herokuCallbackUrl : config.google.localCallbackUrl;
 
 passport.use(new GoogleStrategy({
-        clientID: '948752186836-875s16i6pgmbsm3h3ljk5gsho4n3gsip.apps.googleusercontent.com',
-        clientSecret: '8yeosfCFBccmVRcZag_Pe2lS',
+        clientID: secretConfig.clientID,
+        clientSecret: secretConfig.clientSecret,
         callbackURL: googleCallbackUrl
     },
     (accessToken, refreshToken, profile, done) => {
